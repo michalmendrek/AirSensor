@@ -11,6 +11,16 @@ void Calibrate(int val);
 
 
 
+typedef struct
+{
+	uint16_t Display[4];
+	uint32_t CalibrationValue;
+	uint16_t CurrentValue;
+
+} SensorStruct;
+
+
+
 
 #endif
 

@@ -98,6 +98,7 @@ int main(void)
   MX_ADC2_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+  HAL_UART_Transmit_IT(&huart2, (unsigned char*)"michal", 6);
 
   /* USER CODE END 2 */
 
