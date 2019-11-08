@@ -1,0 +1,4 @@
+sensor.c:8:6:DisplayAir	24	static
+sensor.c:18:6:DisplayCO	24	static
+sensor.c:29:6:GetMeasurements	8	static
+sensor.c:62:6:Calibrate	40	static
