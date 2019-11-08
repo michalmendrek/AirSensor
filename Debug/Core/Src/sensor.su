@@ -1,4 +1,8 @@
-sensor.c:8:6:DisplayAir	24	static
-sensor.c:18:6:DisplayCO	24	static
-sensor.c:29:6:GetMeasurements	8	static
-sensor.c:62:6:Calibrate	40	static
+sensor.c:6:10:GetAdcValue	24	static
+sensor.c:19:6:SensorInit	24	static
+sensor.c:27:6:GetSensorMeasurements	16	static
+sensor.c:32:6:EvaluateSensor	32	static
+sensor.c:43:6:SetSensorAirLevels	16	static
+sensor.c:48:6:SensorCalibrate	24	static
+sensor.c:91:9:CheckCalibration	16	static
+sensor.c:96:6:DisplaySensorState	24	static

@@ -62,6 +62,12 @@ static void MX_USART2_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+SensorStruct AirSensing;
+SensorStruct CoSensing;
+ uint16_t AIRR[4]={LD6_Pin,LD4_Pin,LD8_Pin,LD3_Pin};
+ uint16_t COO[4]={LD7_Pin,LD9_Pin,LD5_Pin,LD10_Pin};
+
+
 
 /* USER CODE END 0 */
 
@@ -72,6 +78,12 @@ static void MX_USART2_UART_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+	uint16_t airlevel[4]={100,150,200,230};
+	uint16_t colevel[4]={100,150,200,230};
+	SensorInit(&AirSensing, &hadc1, AIRR);
+	SensorInit(&CoSensing, &hadc2, COO);
+	SetSensorAirLevels(&AirSensing, airlevel);
+	SetSensorAirLevels(&CoSensing,  colevel);
 
   /* USER CODE END 1 */
   
@@ -98,27 +110,34 @@ int main(void)
   MX_ADC2_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  HAL_UART_Transmit_IT(&huart2, (unsigned char*)"michal", 6);
+
+
+  //HAL_UART_Transmit_IT(&huart2, (unsigned char*)"michal", 6);
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+AirSensing.CallibrationSamples=10;
+CoSensing.CallibrationSamples=10;
 
   while (1)
   {
+	  DisplaySensorState(&AirSensing);
+	  DisplaySensorState(&CoSensing);
+
+	  if(AirSensing.calibrated==0 || CoSensing.calibrated==0)
+	  {
+		  SensorCalibrate(&AirSensing, &CoSensing);
+	  } else
+	  {
+		  EvaluateSensor(&AirSensing);
+		  EvaluateSensor(&CoSensing);
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  //GetMeasurements();
-	  if(GPIOA->IDR & (1<<0))
-	  {
-	  Calibrate(1);
-	  } else
-	  {
-		  Calibrate(0);
-		  GetMeasurements();
-	  }
+
   }
   /* USER CODE END 3 */
 }
